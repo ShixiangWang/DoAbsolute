@@ -3,6 +3,10 @@
 
 # DoAbsolute
 
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![GitHub
+tag](https://img.shields.io/github/tag/ShixiangWang/DoAbsolute.svg?label=Github)](https://github.com/ShixiangWang/DoAbsolute)
+
 The goal of DoAbsolute is to automate ABSOLUTE calling for multiple
 samples in parallel way.
 
