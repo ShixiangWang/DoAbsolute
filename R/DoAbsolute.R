@@ -72,7 +72,7 @@ DoAbsolute = function(Seg, Maf = NULL,
     install.packages("data.table", dependencies = TRUE)
   }
 
-  if (verbose) cat("o Loading segmentation data...\n")
+  if (verbose) cat("-> Loading segmentation data...\n")
   if (is.character(Seg)) {
     if (file.exists(Seg)) {
       Seg = data.table::fread(input = Seg)
@@ -90,7 +90,7 @@ DoAbsolute = function(Seg, Maf = NULL,
   }
 
   if (!is.null(Maf)){
-    if (verbose) cat("o Loading Maf data...\n")
+    if (verbose) cat("-> Loading Maf data...\n")
     if (is.character(Maf)) {
       if (file.exists(Maf)) {
         Maf = data.table::fread(input = Maf)
@@ -106,7 +106,7 @@ DoAbsolute = function(Seg, Maf = NULL,
       }}}
 
 
-  if (verbose) cat("o Checking data format of segmentation file...\n")
+  if (verbose) cat("-> Checking data format of segmentation file...\n")
   #-- check Seg data
   seg_cols = c("Sample", "Chromosome", "Start", "End", "Num_Probes", "Segment_Mean")
   if (!all(seg_cols %in% colnames(Seg))){
@@ -117,7 +117,7 @@ DoAbsolute = function(Seg, Maf = NULL,
 
   Seg$Chromosome = as.character(Seg$Chromosome)
   Seg$Chromosome = gsub(pattern = "chr", replacement = "", Seg$Chromosome, ignore.case = TRUE)
-  if (verbose) cat("o Keeping only autosome for CNV data...\n")
+  if (verbose) cat("-> Keeping only autosome for CNV data...\n")
   autosome = as.character(seq(1,22))
   Seg = Seg[Chromosome %in% autosome, ]
 
@@ -140,7 +140,7 @@ DoAbsolute = function(Seg, Maf = NULL,
 
     Maf$Chromosome = as.character(Maf$Chromosome)
     Maf$Chromosome = gsub(pattern = "chr", replacement = "", Maf$Chromosome, ignore.case = TRUE)
-    if (verbose) cat("o Keeping only autosome for Maf data...\n")
+    if (verbose) cat("-> Keeping only autosome for Maf data...\n")
     Maf = Maf[Chromosome %in% autosome, ]
   }
 
@@ -151,14 +151,14 @@ DoAbsolute = function(Seg, Maf = NULL,
   seg_filepath = vector(mode = "character", length = length(samples))
   maf_filepath = vector(mode = "character", length = length(samples))
 
-  if (verbose) cat("o Creating temp directory ...\n")
+  if (verbose) cat("-> Creating temp directory ...\n")
   if(!dir.exists(temp.dir)) {
     dir.create(temp.dir, recursive = TRUE, showWarnings = FALSE)
   }
 
-  if (verbose) cat("o Spliting seg data of samples to different files...\n")
+  if (verbose) cat("-> Spliting seg data of samples to different files...\n")
   for (i in seq_along(samples)) {
-    if (verbose) cat("oo Processing sample ", samples[i], "...\n")
+    if (verbose) cat("--> Processing sample ", samples[i], "...\n")
     seg = Seg[Sample == samples[i], ]
     seg_filepath[i] = file.path(temp.dir, paste0(samples[i], ".seg"))
     data.table::fwrite(x = seg, file = seg_filepath[i], sep = "\t")
@@ -168,17 +168,17 @@ DoAbsolute = function(Seg, Maf = NULL,
     } else {
       maf = Maf[Tumor_Sample_Barcode == samples[i], ]
       if (nrow(maf) == 0) {
-        if (verbose) cat("ooo This sample has not Maf data, skipping...\n")
+        if (verbose) cat("---> This sample has not Maf data, skipping...\n")
         maf_filepath[i] = NA_character_
       } else {
-        if (verbose) cat("ooo Filter mutations which vaf<", min.mut.af, "...\n")
+        if (verbose) cat("---> Filtering mutations which vaf<", min.mut.af, "...\n")
         maf = maf[(t_alt_count / (t_ref_count + t_alt_count)) >= min.mut.af,]
-        if (verbose) cat("ooo Filter Maf which count<", min.no.mut, "...\n")
+        if (verbose) cat("---> Filtering Maf which count<", min.no.mut, "...\n")
         if (nrow(maf) < min.no.mut) {
-          if (verbose) cat("ooo This sample has not Maf data (after filtering), skipping...\n")
+          if (verbose) cat("---> This sample has not Maf data (after filtering), skipping...\n")
           maf_filepath[i] = NA_character_
         } else {
-          if (verbose) cat("ooo Outputing corresponding Maf file...\n")
+          if (verbose) cat("---> Outputing corresponding Maf file...\n")
           maf_filepath[i] = file.path(temp.dir, paste0(samples[i], ".maf"))
           data.table::fwrite(x = maf, file = maf_filepath[i], sep = "\t")
           #write.csv(x = maf, file = maf_filepath[i], sep = "\t", quote = FALSE, row.names = FALSE)
@@ -186,7 +186,7 @@ DoAbsolute = function(Seg, Maf = NULL,
       }
     }
   }
-  if (verbose) cat("o Spliting seg data of samples done.\n")
+  if (verbose) cat("-> Spliting seg data of samples done.\n")
 
   #-- match options
   platform = match.arg(platform)
@@ -237,7 +237,7 @@ DoAbsolute = function(Seg, Maf = NULL,
   }
 
   if (length(samples) != 0) {
-    if (verbose) cat("o Running RunAbsolute...\n")
+    if (verbose) cat("-> Running RunAbsolute...\n")
 
     if (nThread == 1) {
       for(i in seq_along(samples)){
@@ -246,7 +246,7 @@ DoAbsolute = function(Seg, Maf = NULL,
             maf_fn = maf_filepath[i]
           }
         seg_fn = seg_filepath[i]
-        if (verbose) cat("oo Processing sample ", samples[i], "...\n")
+        if (verbose) cat("--> Processing sample ", samples[i], "...\n")
         suppressWarnings(ABSOLUTE::RunAbsolute(seg.dat.fn = seg_fn, maf.fn = maf_fn, # output.fn.base = output.fn.base,
                                                sample.name = samples[i],
                                                sigma.p = sigma.p, max.sigma.h = max.sigma.h,
@@ -264,7 +264,7 @@ DoAbsolute = function(Seg, Maf = NULL,
             maf_fn = maf_filepath[i]
           }
         seg_fn = seg_filepath[i]
-        if (verbose) cat("oo Processing sample ", samples[i], "...\n")
+        if (verbose) cat("--> Processing sample ", samples[i], "...\n")
         suppressWarnings(ABSOLUTE::RunAbsolute(seg.dat.fn = seg_fn, maf.fn = maf_fn, # output.fn.base = output.fn.base,
                                                sample.name = samples[i],
                                                sigma.p = sigma.p, max.sigma.h = max.sigma.h,
@@ -276,20 +276,20 @@ DoAbsolute = function(Seg, Maf = NULL,
                                                min.mut.af = min.mut.af, verbose = verbose))
       }
     }
-    if (verbose) cat("o RunAbsolute done. Retrieving results...\n")
+    if (verbose) cat("-> RunAbsolute done. Retrieving results...\n")
   }
 
 
   absolute_files = file.path(cache.dir, grep("RData", dir(cache.dir), value = TRUE))
   review.dir = file.path(cache.dir, "review")
 
-  if (verbose) cat("o Running Absolute summarize...\n")
+  if (verbose) cat("-> Running Absolute summarize...\n")
   suppressWarnings(ABSOLUTE::CreateReviewObject(obj.name = "DoAbsolute",
                                                 absolute.files = absolute_files,
                                                 indv.results.dir = review.dir,
                                                 copy_num_type = copy_num_type,
                                                 plot.modes = TRUE, verbose = verbose))
-  if (verbose) cat("\no Absolute summarize done. Prepare auto-reviewing...\n")
+  if (verbose) cat("\n-> Absolute summarize done. Prepare auto-reviewing...\n")
 
   pp_call_fn = file.path(review.dir, grep("PP-calls_tab.txt", dir(review.dir), value = TRUE))
   modes_fn = file.path(review.dir, grep("PP-modes.data.RData", dir(review.dir), value = TRUE))
@@ -300,11 +300,11 @@ DoAbsolute = function(Seg, Maf = NULL,
                                                     obj.name = "DoAbsolute",
                                                     copy_num_type = copy_num_type,
                                                     verbose = verbose))
-  if (verbose) cat("o Absolute Auto-reviewing done.\n")
+  if (verbose) cat("-> Absolute Auto-reviewing done.\n")
 
   reviewed.dir = file.path(review.dir, "reviewed")
 
-  if (verbose) cat("o Outputing final results...\n")
+  if (verbose) cat("-> Outputing final results...\n")
   if (keepAllResult) {
     cat("oo Choose keeping all results...\n")
   } else {
