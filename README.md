@@ -7,17 +7,17 @@
 [![GitHub
 tag](https://img.shields.io/github/tag/ShixiangWang/DoAbsolute.svg?label=Github)](https://github.com/ShixiangWang/DoAbsolute)
 
-The goal of DoAbsolute is to automate ABSOLUTE calling for multiple
+The goal of **DoAbsolute** is to automate ABSOLUTE calling for multiple
 samples in parallel way.
 
 [ABSOLUTE](https://www.nature.com/articles/nbt.2203) is a famous
-software developed by Broad Institute, however the `RunAbsolute`
+software developed by Broad Institute, however, the `RunAbsolute`
 function is designed for computing one sample each time and set no
-default values. **DoAbsolute** help user set default parameters
+default values. **DoAbsolute** helps user set default parameters
 according to [ABSOLUTE
 documentation](http://software.broadinstitute.org/cancer/software/genepattern/modules/docs/ABSOLUTE),
-provide an uniform interface to input data easily and run RunAbsolute
-parallelly.
+provides a uniform interface to input data easily and runs
+**RunAbsolute** parallelly.
 
 More detail about how to analyze ABSOLUTE results please see [this
 link](http://software.broadinstitute.org/cancer/software/genepattern/analyzing-absolute-data).
