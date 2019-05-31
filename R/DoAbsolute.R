@@ -15,26 +15,26 @@
 #' @param Seg a `data.frame` or a file (path) contains columns
 #' "Sample", "Chromosome", "Start", "End", "Num_Probes", "Segment_Mean".
 #' @param Maf MAF, default is `NULL`, can provided as `data.frame` or file path.
-#' @param sigma.p Provisional value of excess sample level variance used for mode search.
-#' @param max.sigma.h Maximum value of excess sample level variance (Eq. 6).
-#' @param min.ploidy Minimum ploidy value to consider. Solutions implying lower ploidy values will be discarded.
-#' @param max.ploidy Maximum ploidy value to consider. Solutions implying greater ploidy values will be discarded.
-#' @param primary.disease Primary disease of the sample.
-#' @param platform one of "SNP_6.0", "Illumina_WES", "SNP_250K_STY".
-#' @param temp.dir directory path used to store tempory files.
-#' @param clean.temp if `TRUE`, auto-clean temp dir at the end.
-#' @param results.dir directory path used to store result files.
-#' @param max.as.seg.count Maximum number of allelic segments. Samples with a higher segment count will be flagged as 'failed'.
-#' @param max.non.clonal Maximum genome fraction that may be modeled as non-clonal (subclonal SCNA). Solutions implying greater values will be discarded.
-#' @param max.neg.genome Maximum genome fraction that may be modeled as non-clonal with copy-ratio below that of clonal homozygous deletion. Solutions implying greater values will be discarded.
-#' @param copy.num.type The type of copy number to be handled. Either total or allelic. Total is what this package for.
-#' @param min.mut.af Minimum mutation allelic fraction. Mutations with lower allelic fractions will be filtered out before analysis.
-#' @param min.no.mut Minor allele frequency file, or NULL if one is not available. This specifies the data for somatic point mutations to be used by ABSOLUTE.
-#' @param verbose if `TRUE`, print extra info.
-#' @param nThread number of cores used for computation.
-#' @param keepAllResult if `TRUE`, clean all results, otherwise clean result directory and keep most important results.
+#' @param sigma.p Provisional value of excess sample level variance used for mode search. Default: 0
+#' @param max.sigma.h Maximum value of excess sample level variance (Eq. 6). Default: 0.2
+#' @param min.ploidy Minimum ploidy value to consider. Solutions implying lower ploidy values will be discarded. Default: 0.5
+#' @param max.ploidy Maximum ploidy value to consider. Solutions implying greater ploidy values will be discarded. Default: 10
+#' @param primary.disease Primary disease of the sample. Default: `NA`
+#' @param platform one of "SNP_6.0", "Illumina_WES", "SNP_250K_STY". Default: "SNP_6.0"
+#' @param temp.dir directory path used to store tempory files. Default: Absolute subdirectory under `tempdir()`
+#' @param clean.temp if `TRUE`, auto-clean temp dir at the end. Default: `FALSE`
+#' @param results.dir directory path used to store result files. Default: work directory
+#' @param max.as.seg.count Maximum number of allelic segments. Samples with a higher segment count will be flagged as 'failed'. Default: 1500
+#' @param max.non.clonal Maximum genome fraction that may be modeled as non-clonal (subclonal SCNA). Solutions implying greater values will be discarded. Default: 0.05
+#' @param max.neg.genome Maximum genome fraction that may be modeled as non-clonal with copy-ratio below that of clonal homozygous deletion. Solutions implying greater values will be discarded. Default: 0.005
+#' @param copy.num.type The type of copy number to be handled. Either total or allelic. Total is what this package for. Default: "total"
+#' @param min.mut.af Minimum mutation allelic fraction. Mutations with lower allelic fractions will be filtered out before analysis. Default: 0.1
+#' @param min.no.mut Minor allele frequency file, or NULL if one is not available. This specifies the data for somatic point mutations to be used by ABSOLUTE. Default: 5
+#' @param verbose if `TRUE`, print extra info. Default: `FALSE`
+#' @param nThread number of cores used for computation. Default: 1L
+#' @param keepAllResult if `TRUE`, clean all results, otherwise clean result directory and keep most important results. Default: `TRUE`
 #' @param recover if `TRUE`, recover previous unfinished work.
-#' This is helpful when program stop unexpectedly when `clean.temp` is FALSE.
+#' This is helpful when program stop unexpectedly when `clean.temp` is FALSE. Default: `FALSE`
 #' @author Shixiang Wang <w_shixiang@163.com>
 #' @return NULL
 #' @import foreach doParallel data.table utils parallel

@@ -20,44 +20,44 @@ DoAbsolute(Seg, Maf = NULL, sigma.p = 0, max.sigma.h = 0.2,
 
 \item{Maf}{MAF, default is \code{NULL}, can provided as \code{data.frame} or file path.}
 
-\item{sigma.p}{Provisional value of excess sample level variance used for mode search.}
+\item{sigma.p}{Provisional value of excess sample level variance used for mode search. Default: 0}
 
-\item{max.sigma.h}{Maximum value of excess sample level variance (Eq. 6).}
+\item{max.sigma.h}{Maximum value of excess sample level variance (Eq. 6). Default: 0.2}
 
-\item{min.ploidy}{Minimum ploidy value to consider. Solutions implying lower ploidy values will be discarded.}
+\item{min.ploidy}{Minimum ploidy value to consider. Solutions implying lower ploidy values will be discarded. Default: 0.5}
 
-\item{max.ploidy}{Maximum ploidy value to consider. Solutions implying greater ploidy values will be discarded.}
+\item{max.ploidy}{Maximum ploidy value to consider. Solutions implying greater ploidy values will be discarded. Default: 10}
 
-\item{primary.disease}{Primary disease of the sample.}
+\item{primary.disease}{Primary disease of the sample. Default: \code{NA}}
 
-\item{platform}{one of "SNP_6.0", "Illumina_WES", "SNP_250K_STY".}
+\item{platform}{one of "SNP_6.0", "Illumina_WES", "SNP_250K_STY". Default: "SNP_6.0"}
 
-\item{temp.dir}{directory path used to store tempory files.}
+\item{temp.dir}{directory path used to store tempory files. Default: Absolute subdirectory under \code{tempdir()}}
 
-\item{clean.temp}{if \code{TRUE}, auto-clean temp dir at the end.}
+\item{clean.temp}{if \code{TRUE}, auto-clean temp dir at the end. Default: \code{FALSE}}
 
-\item{results.dir}{directory path used to store result files.}
+\item{results.dir}{directory path used to store result files. Default: work directory}
 
-\item{max.as.seg.count}{Maximum number of allelic segments. Samples with a higher segment count will be flagged as 'failed'.}
+\item{max.as.seg.count}{Maximum number of allelic segments. Samples with a higher segment count will be flagged as 'failed'. Default: 1500}
 
-\item{max.non.clonal}{Maximum genome fraction that may be modeled as non-clonal (subclonal SCNA). Solutions implying greater values will be discarded.}
+\item{max.non.clonal}{Maximum genome fraction that may be modeled as non-clonal (subclonal SCNA). Solutions implying greater values will be discarded. Default: 0.05}
 
-\item{max.neg.genome}{Maximum genome fraction that may be modeled as non-clonal with copy-ratio below that of clonal homozygous deletion. Solutions implying greater values will be discarded.}
+\item{max.neg.genome}{Maximum genome fraction that may be modeled as non-clonal with copy-ratio below that of clonal homozygous deletion. Solutions implying greater values will be discarded. Default: 0.005}
 
-\item{copy.num.type}{The type of copy number to be handled. Either total or allelic. Total is what this package for.}
+\item{copy.num.type}{The type of copy number to be handled. Either total or allelic. Total is what this package for. Default: "total"}
 
-\item{min.mut.af}{Minimum mutation allelic fraction. Mutations with lower allelic fractions will be filtered out before analysis.}
+\item{min.mut.af}{Minimum mutation allelic fraction. Mutations with lower allelic fractions will be filtered out before analysis. Default: 0.1}
 
-\item{min.no.mut}{Minor allele frequency file, or NULL if one is not available. This specifies the data for somatic point mutations to be used by ABSOLUTE.}
+\item{min.no.mut}{Minor allele frequency file, or NULL if one is not available. This specifies the data for somatic point mutations to be used by ABSOLUTE. Default: 5}
 
-\item{verbose}{if \code{TRUE}, print extra info.}
+\item{verbose}{if \code{TRUE}, print extra info. Default: \code{FALSE}}
 
-\item{nThread}{number of cores used for computation.}
+\item{nThread}{number of cores used for computation. Default: 1L}
 
-\item{keepAllResult}{if \code{TRUE}, clean all results, otherwise clean result directory and keep most important results.}
+\item{keepAllResult}{if \code{TRUE}, clean all results, otherwise clean result directory and keep most important results. Default: \code{TRUE}}
 
 \item{recover}{if \code{TRUE}, recover previous unfinished work.
-This is helpful when program stop unexpectedly when \code{clean.temp} is FALSE.}
+This is helpful when program stop unexpectedly when \code{clean.temp} is FALSE. Default: \code{FALSE}}
 }
 \description{
 \href{https://www.nature.com/articles/nbt.2203}{ABSOLUTE} is a famous software
