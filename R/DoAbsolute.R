@@ -117,8 +117,9 @@ DoAbsolute = function(Seg, Maf = NULL,
 
   Seg$Chromosome = as.character(Seg$Chromosome)
   Seg$Chromosome = gsub(pattern = "chr", replacement = "", Seg$Chromosome, ignore.case = TRUE)
-  if (verbose) cat("-> Keeping only autosome for CNV data...\n")
-  autosome = as.character(seq(1,22))
+  Seg$Chromosome = gsub(pattern = "X", replacement = "23", Seg$Chromosome, ignore.case = TRUE)
+  if (verbose) cat("-> Keeping only chr 1-23 for CNV data...\n")
+  autosome = as.character(seq(1,23))
   Seg = Seg[Chromosome %in% autosome, ]
 
   #-- check Maf data
@@ -140,7 +141,8 @@ DoAbsolute = function(Seg, Maf = NULL,
 
     Maf$Chromosome = as.character(Maf$Chromosome)
     Maf$Chromosome = gsub(pattern = "chr", replacement = "", Maf$Chromosome, ignore.case = TRUE)
-    if (verbose) cat("-> Keeping only autosome for Maf data...\n")
+    Maf$Chromosome = gsub(pattern = "X", replacement = "23", Maf$Chromosome, ignore.case = TRUE)
+    if (verbose) cat("-> Keeping only chr 1-23 for Maf data...\n")
     Maf = Maf[Chromosome %in% autosome, ]
   }
 
@@ -207,13 +209,13 @@ DoAbsolute = function(Seg, Maf = NULL,
   registerDoParallel(cores = nThread)
 
   if (recover) {
-    cat("o recover mode is TRUE, checking samples have been called...\n")
+    cat("-> recover mode is TRUE, checking samples have been called...\n")
     not_called = c()
     maf_filepath = c()
     seg_filepath = c()
     for (i in seq_along(samples)) {
       if(!file.exists(file.path(cache.dir,paste0(samples[i], ".ABSOLUTE.RData")))) {
-        cat("oo", samples[i], "is not called.\n")
+        cat("--> ", samples[i], "is not called.\n")
         not_called = c(not_called, samples[i])
         if (!file.exists(file.path(temp.dir, paste0(samples[i], ".seg")))) {
           stop("Something wrong with splitted files.")
@@ -228,11 +230,10 @@ DoAbsolute = function(Seg, Maf = NULL,
     }
     samples = not_called
 
-
     if (length(not_called) != 0) {
-      cat("o will recover ABSOLUTE calling for above samples.\n")
+      cat("-> ABSOLUTE calling for above samples will be recovered.\n")
     } else {
-      cat("o ABSOLUTE calling has been done. \n")
+      cat("-> ABSOLUTE calling has been done. \n")
     }
   }
 
