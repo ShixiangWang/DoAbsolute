@@ -307,9 +307,9 @@ DoAbsolute = function(Seg, Maf = NULL,
 
   if (verbose) cat("-> Outputing final results...\n")
   if (keepAllResult) {
-    cat("oo Choose keeping all results...\n")
+    cat("--> Choose keeping all results...\n")
   } else {
-    cat("oo Choose not keeping all results. Keepping only final results...\n")
+    cat("--> Choose not keeping all results. Keepping only final results...\n")
   }
 
 
@@ -346,7 +346,7 @@ DoAbsolute = function(Seg, Maf = NULL,
     unlink(temp.dir, recursive = TRUE, force = TRUE)
   }
 
-  cat("o Done.\n")
+  cat("-> Done.\n")
 }
 
 
