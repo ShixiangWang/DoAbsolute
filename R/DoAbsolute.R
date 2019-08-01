@@ -206,7 +206,13 @@ DoAbsolute = function(Seg, Maf = NULL,
     nThread = nCores
   }
 
-  registerDoParallel(cores = nThread)
+  if(Sys.info()[['sysname']] == 'Windows') {
+    cl = makeCluster(nThread)
+    registerDoParallel(cl)
+  } else {
+    registerDoParallel(cores = nThread)
+  }
+
 
   if (recover) {
     cat("-> recover mode is TRUE, checking samples have been called...\n")
