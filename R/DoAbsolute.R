@@ -5,6 +5,8 @@
 ###################################################
 #' Automate ABSOLUTE calling for multiple samples in parallel way
 #'
+#' An example can be found at [README](https://github.com/ShixiangWang/DoAbsolute#example).
+#'
 #' [ABSOLUTE](https://www.nature.com/articles/nbt.2203) is a famous software
 #' developed by Broad Institute, however the `RunAbsolute` function is designed for
 #' computing one sample each time and set no default values. **DoAbsolute** help

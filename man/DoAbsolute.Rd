@@ -60,13 +60,15 @@ DoAbsolute(Seg, Maf = NULL, sigma.p = 0, max.sigma.h = 0.2,
 This is helpful when program stop unexpectedly when \code{clean.temp} is FALSE. Default: \code{FALSE}}
 }
 \description{
+An example can be found at \href{https://github.com/ShixiangWang/DoAbsolute#example}{README}.
+}
+\details{
 \href{https://www.nature.com/articles/nbt.2203}{ABSOLUTE} is a famous software
 developed by Broad Institute, however the \code{RunAbsolute} function is designed for
 computing one sample each time and set no default values. \strong{DoAbsolute} help
 user set default parameters according to \href{http://software.broadinstitute.org/cancer/software/genepattern/modules/docs/ABSOLUTE}{ABSOLUTE documentation}, provide an uniform interface to
 input data easily and run RunAbsolute parallelly.
-}
-\details{
+
 More detail about how to analyze ABSOLUTE results please see \href{http://software.broadinstitute.org/cancer/software/genepattern/analyzing-absolute-data}{this link}.
 }
 \references{
