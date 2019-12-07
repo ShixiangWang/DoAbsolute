@@ -6,6 +6,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![GitHub
 tag](https://img.shields.io/github/tag/ShixiangWang/DoAbsolute.svg?label=Github)](https://github.com/ShixiangWang/DoAbsolute)
+[![HitCount](http://hits.dwyl.io/ShixiangWang/DoAbsolute.svg)](http://hits.dwyl.io/ShixiangWang/DoAbsolute)
 
 The goal of **DoAbsolute** is to automate ABSOLUTE calling for multiple
 samples in parallel way.
@@ -47,8 +48,7 @@ This is a basic example which shows you how to run DoAbsolute using
 example data from [ABSOLUTE
 documentation](http://software.broadinstitute.org/cancer/software/genepattern/modules/docs/ABSOLUTE).
 
-Load
-package.
+Load package.
 
 ``` r
 library(DoAbsolute)
