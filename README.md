@@ -3,7 +3,7 @@
 
 # DoAbsolute
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![GitHub
 tag](https://img.shields.io/github/tag/ShixiangWang/DoAbsolute.svg?label=Github)](https://github.com/ShixiangWang/DoAbsolute)
 [![HitCount](http://hits.dwyl.io/ShixiangWang/DoAbsolute.svg)](http://hits.dwyl.io/ShixiangWang/DoAbsolute)
