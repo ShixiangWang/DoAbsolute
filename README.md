@@ -48,7 +48,8 @@ This is a basic example which shows you how to run DoAbsolute using
 example data from [ABSOLUTE
 documentation](http://software.broadinstitute.org/cancer/software/genepattern/modules/docs/ABSOLUTE).
 
-Load package.
+Load
+package.
 
 ``` r
 library(DoAbsolute)
@@ -93,3 +94,8 @@ DoAbsolute(Seg = Seg, Maf = Maf, platform = "SNP_6.0", copy.num.type = "total",
     Wang, Shixiang, et al. "The predictive power of tumor mutational burden 
         in lung cancer immunotherapy response is influenced by patients' sex." 
         International journal of cancer (2019).
+
+Reference:
+
+  - Carter, Scott L., et al. “Absolute quantification of somatic DNA
+    alterations in human cancer.” Nature biotechnology 30.5 (2012): 413.
