@@ -152,6 +152,7 @@ DoAbsolute = function(Seg, Maf = NULL,
 
   #-- create temp files to generate input for RunAbsolute
   samples = unique(Seg$Sample)
+  SAMPLES = samples
   seg_filepath = vector(mode = "character", length = length(samples))
   maf_filepath = vector(mode = "character", length = length(samples))
 
@@ -288,9 +289,27 @@ DoAbsolute = function(Seg, Maf = NULL,
     if (verbose) cat("-> RunAbsolute done. Retrieving results...\n")
   }
 
+  ## This will make problem when iteration computation with same temp dir
+  # absolute_files = file.path(cache.dir, grep("RData", dir(cache.dir), value = TRUE))
+  absolute_files = file.path(cache.dir, paste0(SAMPLES, ".ABSOLUTE.RData"))
+  if (verbose) cat("-> Checking result files...\n")
+  for (f in absolute_files) {
+    if (!file.exists(f)) {
+      warning("--> Result file ", f, " does not exist, drop it.", immediate. = TRUE)
+      absolute_files = setdiff(absolute_files, f)
+    }
+  }
+  if (length(absolute_files) < 1) {
+    stop("No result file to proceed.")
+  }
 
-  absolute_files = file.path(cache.dir, grep("RData", dir(cache.dir), value = TRUE))
+  if (verbose) cat("-> Checked.\n")
+
   review.dir = file.path(cache.dir, "review")
+  if (dir.exists(review.dir)) {
+    if (verbose) cat("-> Removed previous temp review result directory.\n")
+    unlink(review.dir, recursive = TRUE)
+  }
 
   if (verbose) cat("-> Running Absolute summarize...\n")
   suppressWarnings(ABSOLUTE::CreateReviewObject(obj.name = "DoAbsolute",
@@ -300,8 +319,10 @@ DoAbsolute = function(Seg, Maf = NULL,
                                                 plot.modes = TRUE, verbose = verbose))
   if (verbose) cat("\n-> Absolute summarize done. Prepare auto-reviewing...\n")
 
-  pp_call_fn = file.path(review.dir, grep("PP-calls_tab.txt", dir(review.dir), value = TRUE))
-  modes_fn = file.path(review.dir, grep("PP-modes.data.RData", dir(review.dir), value = TRUE))
+  # pp_call_fn = file.path(review.dir, grep("PP-calls_tab.txt", dir(review.dir), value = TRUE))
+  # modes_fn = file.path(review.dir, grep("PP-modes.data.RData", dir(review.dir), value = TRUE))
+  pp_call_fn = file.path(review.dir, "DoAbsolute.PP-calls_tab.txt")
+  modes_fn = file.path(review.dir, "DoAbsolute.PP-modes.data.RData")
   suppressWarnings(ABSOLUTE::ExtractReviewedResults(reviewed.pp.calls.fn = pp_call_fn,
                                                     analyst.id = "wsx",
                                                     modes.fn = modes_fn,
