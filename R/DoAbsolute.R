@@ -254,7 +254,7 @@ DoAbsolute <- function(Seg, Maf = NULL,
   }
 
   if (length(samples) != 0) {
-    if (verbose) cat("-> Running RunAbsolute...\n")
+    if (verbose) cat("-> Running RunAbsolute...(be patient)\n")
 
     if (nThread == 1) {
       for (i in seq_along(samples)) {
