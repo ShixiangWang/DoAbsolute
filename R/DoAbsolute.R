@@ -209,21 +209,6 @@ DoAbsolute <- function(Seg, Maf = NULL,
     dir.create(cache.dir, recursive = TRUE, showWarnings = FALSE)
   }
 
-  # foreach loop
-  nCores <- detectCores(logical = FALSE)
-  if (nThread > nCores) {
-    warning("Number of real physical core is ", nCores, " while user set ", nThread, "\nUse ", nCores, " Cores.")
-    nThread <- nCores
-  }
-
-  if (Sys.info()[["sysname"]] == "Windows") {
-    cl <- makeCluster(nThread)
-    registerDoParallel(cl)
-  } else {
-    registerDoParallel(cores = nThread)
-  }
-
-
   if (recover) {
     cat("-> recover mode is TRUE, checking samples have been called...\n")
     not_called <- c()
@@ -256,6 +241,22 @@ DoAbsolute <- function(Seg, Maf = NULL,
   if (length(samples) != 0) {
     if (verbose) cat("-> Running RunAbsolute...(be patient)\n")
 
+    # foreach loop
+    nCores <- detectCores(logical = FALSE)
+    if (nThread > nCores) {
+      warning("Number of real physical core is ", nCores, " while user set ", nThread, "\nUse ", nCores, " Cores.")
+      nThread <- nCores
+    }
+
+    if (nThread != 1) {
+      if (Sys.info()[["sysname"]] == "Windows") {
+        cl <- makeCluster(nThread)
+        registerDoParallel(cl)
+      } else {
+        registerDoParallel(cores = nThread)
+      }
+    }
+
     if (nThread == 1) {
       for (i in seq_along(samples)) {
         if (is.na(maf_filepath[i])) {
@@ -265,17 +266,36 @@ DoAbsolute <- function(Seg, Maf = NULL,
         }
         seg_fn <- seg_filepath[i]
         if (verbose) cat("--> Processing sample ", samples[i], "...\n")
-        suppressWarnings(ABSOLUTE::RunAbsolute(
-          seg.dat.fn = seg_fn, maf.fn = maf_fn, # output.fn.base = output.fn.base,
-          sample.name = samples[i],
-          sigma.p = sigma.p, max.sigma.h = max.sigma.h,
-          min.ploidy = min.ploidy, max.ploidy = max.ploidy,
-          primary.disease = primary.disease, platform = platform,
-          results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
-          max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
-          copy_num_type = copy_num_type,
-          min.mut.af = min.mut.af, verbose = verbose
-        ))
+        tryCatch({
+          suppressWarnings(ABSOLUTE::RunAbsolute(
+            seg.dat.fn = seg_fn, maf.fn = maf_fn,
+            sample.name = samples[i],
+            sigma.p = sigma.p, max.sigma.h = max.sigma.h,
+            min.ploidy = min.ploidy, max.ploidy = max.ploidy,
+            primary.disease = primary.disease, platform = platform,
+            results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
+            max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
+            copy_num_type = copy_num_type,
+            min.mut.af = min.mut.af, verbose = verbose
+          ))
+        }, error = function(e) {
+          if (grepl("No mutations left", e$message)) {
+            cat("---> Error by 'no mutation left' detected, re-run with No mutation data.\n")
+            suppressWarnings(ABSOLUTE::RunAbsolute(
+              seg.dat.fn = seg_fn, maf.fn = NULL,
+              sample.name = samples[i],
+              sigma.p = sigma.p, max.sigma.h = max.sigma.h,
+              min.ploidy = min.ploidy, max.ploidy = max.ploidy,
+              primary.disease = primary.disease, platform = platform,
+              results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
+              max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
+              copy_num_type = copy_num_type,
+              min.mut.af = min.mut.af, verbose = verbose
+            ))
+          } else {
+            stop(e)
+          }
+        })
       }
     } else {
       foreach(i = seq_along(samples)) %dopar% {
@@ -286,17 +306,36 @@ DoAbsolute <- function(Seg, Maf = NULL,
         }
         seg_fn <- seg_filepath[i]
         if (verbose) cat("--> Processing sample ", samples[i], "...\n")
-        suppressWarnings(ABSOLUTE::RunAbsolute(
-          seg.dat.fn = seg_fn, maf.fn = maf_fn, # output.fn.base = output.fn.base,
-          sample.name = samples[i],
-          sigma.p = sigma.p, max.sigma.h = max.sigma.h,
-          min.ploidy = min.ploidy, max.ploidy = max.ploidy,
-          primary.disease = primary.disease, platform = platform,
-          results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
-          max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
-          copy_num_type = copy_num_type,
-          min.mut.af = min.mut.af, verbose = verbose
-        ))
+        tryCatch({
+          suppressWarnings(ABSOLUTE::RunAbsolute(
+            seg.dat.fn = seg_fn, maf.fn = maf_fn,
+            sample.name = samples[i],
+            sigma.p = sigma.p, max.sigma.h = max.sigma.h,
+            min.ploidy = min.ploidy, max.ploidy = max.ploidy,
+            primary.disease = primary.disease, platform = platform,
+            results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
+            max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
+            copy_num_type = copy_num_type,
+            min.mut.af = min.mut.af, verbose = verbose
+          ))
+        }, error = function(e) {
+          if (grepl("no mutation left", e$message)) {
+            cat("---> Error by 'No mutations left' detected, re-run with No mutation data.\n")
+            suppressWarnings(ABSOLUTE::RunAbsolute(
+              seg.dat.fn = seg_fn, maf.fn = NULL,
+              sample.name = samples[i],
+              sigma.p = sigma.p, max.sigma.h = max.sigma.h,
+              min.ploidy = min.ploidy, max.ploidy = max.ploidy,
+              primary.disease = primary.disease, platform = platform,
+              results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
+              max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
+              copy_num_type = copy_num_type,
+              min.mut.af = min.mut.af, verbose = verbose
+            ))
+          } else {
+            stop(e)
+          }
+        })
       }
     }
     if (verbose) cat("-> RunAbsolute done. Retrieving results...\n")

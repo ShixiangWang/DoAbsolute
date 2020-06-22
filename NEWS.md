@@ -1,3 +1,7 @@
+# DoAbsolute 2.1.0
+
+* Fixed error raised by "no mutation left" (#9).
+
 # DoAbsolute 2.0.0
 
 * Formated code.
