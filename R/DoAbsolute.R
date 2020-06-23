@@ -279,7 +279,7 @@ DoAbsolute <- function(Seg, Maf = NULL,
             min.mut.af = min.mut.af, verbose = verbose
           ))
         }, error = function(e) {
-          if (grepl("No mutations left", e$message)) {
+          if (grepl("mutations left", e$message)) {
             cat("---> Error by 'no mutation left' detected, re-run with No mutation data.\n")
             suppressWarnings(ABSOLUTE::RunAbsolute(
               seg.dat.fn = seg_fn, maf.fn = NULL,
@@ -319,7 +319,7 @@ DoAbsolute <- function(Seg, Maf = NULL,
             min.mut.af = min.mut.af, verbose = verbose
           ))
         }, error = function(e) {
-          if (grepl("no mutation left", e$message)) {
+          if (grepl("mutation left", e$message)) {
             cat("---> Error by 'No mutations left' detected, re-run with No mutation data.\n")
             suppressWarnings(ABSOLUTE::RunAbsolute(
               seg.dat.fn = seg_fn, maf.fn = NULL,
