@@ -2,3 +2,4 @@
 ^LICENSE\.md$
 ^DoAbsolute\.Rproj$
 ^\.Rproj\.user$
+^test$

@@ -4,15 +4,29 @@
 \alias{DoAbsolute}
 \title{Automate ABSOLUTE calling for multiple samples in parallel way}
 \usage{
-DoAbsolute(Seg, Maf = NULL, sigma.p = 0, max.sigma.h = 0.2,
-  min.ploidy = 0.5, max.ploidy = 10, primary.disease = NA,
+DoAbsolute(
+  Seg,
+  Maf = NULL,
+  sigma.p = 0,
+  max.sigma.h = 0.2,
+  min.ploidy = 0.5,
+  max.ploidy = 10,
+  primary.disease = NA,
   platform = c("SNP_6.0", "Illumina_WES", "SNP_250K_STY"),
-  temp.dir = file.path(tempdir(), "Absolute"), clean.temp = FALSE,
-  results.dir = getwd(), max.as.seg.count = 1500,
-  max.non.clonal = 0.05, max.neg.genome = 0.005,
-  copy.num.type = c("total", "allelic"), min.mut.af = 0.1,
-  min.no.mut = 5, verbose = FALSE, nThread = 1L,
-  keepAllResult = TRUE, recover = FALSE)
+  temp.dir = file.path(tempdir(), "Absolute"),
+  clean.temp = FALSE,
+  results.dir = getwd(),
+  max.as.seg.count = 1500,
+  max.non.clonal = 0.05,
+  max.neg.genome = 0.005,
+  copy.num.type = c("total", "allelic"),
+  min.mut.af = 0.1,
+  min.no.mut = 5,
+  verbose = FALSE,
+  nThread = 1L,
+  keepAllResult = TRUE,
+  recover = FALSE
+)
 }
 \arguments{
 \item{Seg}{a \code{data.frame} or a file (path) contains columns
@@ -61,6 +75,8 @@ This is helpful when program stop unexpectedly when \code{clean.temp} is FALSE. 
 }
 \description{
 An example can be found at \href{https://github.com/ShixiangWang/DoAbsolute#example}{README}.
+If calling for a sample failed, the error message will be written to
+\code{error.log} under result directory.
 }
 \details{
 \href{https://www.nature.com/articles/nbt.2203}{ABSOLUTE} is a famous software

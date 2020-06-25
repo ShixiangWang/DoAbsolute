@@ -6,6 +6,8 @@
 #' Automate ABSOLUTE calling for multiple samples in parallel way
 #'
 #' An example can be found at [README](https://github.com/ShixiangWang/DoAbsolute#example).
+#' If calling for a sample failed, the error message will be written to
+#' `error.log` under result directory.
 #'
 #' [ABSOLUTE](https://www.nature.com/articles/nbt.2203) is a famous software
 #' developed by Broad Institute, however the `RunAbsolute` function is designed for
@@ -266,23 +268,10 @@ DoAbsolute <- function(Seg, Maf = NULL,
         }
         seg_fn <- seg_filepath[i]
         if (verbose) cat("--> Processing sample ", samples[i], "...\n")
-        tryCatch({
-          suppressWarnings(ABSOLUTE::RunAbsolute(
-            seg.dat.fn = seg_fn, maf.fn = maf_fn,
-            sample.name = samples[i],
-            sigma.p = sigma.p, max.sigma.h = max.sigma.h,
-            min.ploidy = min.ploidy, max.ploidy = max.ploidy,
-            primary.disease = primary.disease, platform = platform,
-            results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
-            max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
-            copy_num_type = copy_num_type,
-            min.mut.af = min.mut.af, verbose = verbose
-          ))
-        }, error = function(e) {
-          if (grepl("mutations left", e$message)) {
-            cat("---> Error by 'no mutation left' detected, re-run with No mutation data.\n")
+        tryCatch(
+          {
             suppressWarnings(ABSOLUTE::RunAbsolute(
-              seg.dat.fn = seg_fn, maf.fn = NULL,
+              seg.dat.fn = seg_fn, maf.fn = maf_fn,
               sample.name = samples[i],
               sigma.p = sigma.p, max.sigma.h = max.sigma.h,
               min.ploidy = min.ploidy, max.ploidy = max.ploidy,
@@ -292,10 +281,40 @@ DoAbsolute <- function(Seg, Maf = NULL,
               copy_num_type = copy_num_type,
               min.mut.af = min.mut.af, verbose = verbose
             ))
-          } else {
-            stop(e)
+          },
+          error = function(e) {
+            cat("----> Error detected, see log for more details.\n")
+            sink(file.path(results.dir, "error.log"), append = TRUE)
+            cat("Detected error in sample", samples[i], "\n")
+            cat("Error message:", e$message, "\n")
+            if (grepl("mutations left", e$message)) {
+              cat("Try fixing by removing Maf file.\n")
+              tryCatch(
+                {
+                  suppressWarnings(ABSOLUTE::RunAbsolute(
+                    seg.dat.fn = seg_fn, maf.fn = NULL,
+                    sample.name = samples[i],
+                    sigma.p = sigma.p, max.sigma.h = max.sigma.h,
+                    min.ploidy = min.ploidy, max.ploidy = max.ploidy,
+                    primary.disease = primary.disease, platform = platform,
+                    results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
+                    max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
+                    copy_num_type = copy_num_type,
+                    min.mut.af = NULL, verbose = verbose
+                  ))
+                  cat("Fixing successfully!\n")
+                },
+                error = function(e) {
+                  cat("Fixing failed. Skipping this sample.\n")
+                }
+              )
+            } else {
+              cat("Skipping this sample.\n")
+            }
+            cat("========\n")
+            sink()
           }
-        })
+        )
       }
     } else {
       foreach(i = seq_along(samples)) %dopar% {
@@ -306,23 +325,10 @@ DoAbsolute <- function(Seg, Maf = NULL,
         }
         seg_fn <- seg_filepath[i]
         if (verbose) cat("--> Processing sample ", samples[i], "...\n")
-        tryCatch({
-          suppressWarnings(ABSOLUTE::RunAbsolute(
-            seg.dat.fn = seg_fn, maf.fn = maf_fn,
-            sample.name = samples[i],
-            sigma.p = sigma.p, max.sigma.h = max.sigma.h,
-            min.ploidy = min.ploidy, max.ploidy = max.ploidy,
-            primary.disease = primary.disease, platform = platform,
-            results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
-            max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
-            copy_num_type = copy_num_type,
-            min.mut.af = min.mut.af, verbose = verbose
-          ))
-        }, error = function(e) {
-          if (grepl("mutation left", e$message)) {
-            cat("---> Error by 'No mutations left' detected, re-run with No mutation data.\n")
+        tryCatch(
+          {
             suppressWarnings(ABSOLUTE::RunAbsolute(
-              seg.dat.fn = seg_fn, maf.fn = NULL,
+              seg.dat.fn = seg_fn, maf.fn = maf_fn,
               sample.name = samples[i],
               sigma.p = sigma.p, max.sigma.h = max.sigma.h,
               min.ploidy = min.ploidy, max.ploidy = max.ploidy,
@@ -332,10 +338,40 @@ DoAbsolute <- function(Seg, Maf = NULL,
               copy_num_type = copy_num_type,
               min.mut.af = min.mut.af, verbose = verbose
             ))
-          } else {
-            stop(e)
+          },
+          error = function(e) {
+            cat("----> Error detected, see log for more details.\n")
+            sink(file.path(results.dir, "error.log"), append = TRUE)
+            cat("Detected error in sample", samples[i], "\n")
+            cat("Error message:", e$message, "\n")
+            if (grepl("mutations left", e$message)) {
+              cat("Try fixing by removing Maf file.\n")
+              tryCatch(
+                {
+                  suppressWarnings(ABSOLUTE::RunAbsolute(
+                    seg.dat.fn = seg_fn, maf.fn = NULL,
+                    sample.name = samples[i],
+                    sigma.p = sigma.p, max.sigma.h = max.sigma.h,
+                    min.ploidy = min.ploidy, max.ploidy = max.ploidy,
+                    primary.disease = primary.disease, platform = platform,
+                    results.dir = cache.dir, max.as.seg.count = max.as.seg.count,
+                    max.non.clonal = max.non.clonal, max.neg.genome = max.neg.genome,
+                    copy_num_type = copy_num_type,
+                    min.mut.af = NULL, verbose = verbose
+                  ))
+                  cat("Fixing successfully!\n")
+                },
+                error = function(e) {
+                  cat("Fixing failed. Skipping this sample.\n")
+                }
+              )
+            } else {
+              cat("Skipping this sample.\n")
+            }
+            cat("========\n")
+            sink()
           }
-        })
+        )
       }
     }
     if (verbose) cat("-> RunAbsolute done. Retrieving results...\n")
