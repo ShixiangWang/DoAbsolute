@@ -57,6 +57,11 @@ DoAbsolute <- function(Seg, Maf = NULL,
     dir.create(results.dir, recursive = TRUE, showWarnings = TRUE)
   }
 
+  if (file.exists(file.path(results.dir, "error.log"))) {
+    unlink(file.path(results.dir, "error.log"))
+    cat("-> Removed previous error log file.\n")
+  }
+
   if (!suppressMessages(requireNamespace("ABSOLUTE"))) {
     stop("Find no package called 'ABSOLUTE', please install it...")
   }
@@ -471,6 +476,10 @@ DoAbsolute <- function(Seg, Maf = NULL,
 
   if (clean.temp) {
     unlink(temp.dir, recursive = TRUE, force = TRUE)
+  }
+
+  if (file.exists(file.path(results.dir, "error.log"))) {
+    cat("-> Error log info detected, see error.log under result directory for details.\n")
   }
 
   cat("-> Done.\n")
