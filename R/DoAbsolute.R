@@ -53,9 +53,9 @@ DoAbsolute <- function(Seg, Maf = NULL,
                        max.non.clonal = 0.05, max.neg.genome = 0.005, copy.num.type = c("total", "allelic"),
                        min.mut.af = 0.1, min.no.mut = 5, verbose = FALSE, nThread = 1L, keepAllResult = TRUE,
                        recover = FALSE) {
-  # if (dir.exists(temp.dir) & length(dir(path = temp.dir)) != 0) {
-  #     stop("Your 'temp.dir' is not empty, please reset it.")
-  # }
+  if (!dir.exists(results.dir)) {
+    dir.create(results.dir, recursive = TRUE, showWarnings = TRUE)
+  }
 
   if (!suppressMessages(requireNamespace("ABSOLUTE"))) {
     stop("Find no package called 'ABSOLUTE', please install it...")
