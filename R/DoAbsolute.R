@@ -56,6 +56,7 @@ DoAbsolute <- function(Seg, Maf = NULL,
   if (!dir.exists(results.dir)) {
     dir.create(results.dir, recursive = TRUE, showWarnings = TRUE)
   }
+  cat("-> Setting results directory as", results.dir, "\n")
 
   if (file.exists(file.path(results.dir, "error.log"))) {
     unlink(file.path(results.dir, "error.log"))
@@ -174,6 +175,7 @@ DoAbsolute <- function(Seg, Maf = NULL,
   if (!dir.exists(temp.dir)) {
     dir.create(temp.dir, recursive = TRUE, showWarnings = FALSE)
   }
+  cat("-> Setting temp directory as", temp.dir, "\n")
 
   if (verbose) cat("-> Spliting seg data of samples to different files...\n")
   for (i in seq_along(samples)) {
@@ -443,17 +445,21 @@ DoAbsolute <- function(Seg, Maf = NULL,
   maf.dir <- file.path(results.dir, "maf")
   dir.create(seg.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(maf.dir, showWarnings = FALSE, recursive = TRUE)
-
+  cat("--> Copying DoAbsolute files in review dir to result directory...")
   t <- file.copy(file.path(reviewed.dir, grep("DoAbsolute", dir(reviewed.dir), value = TRUE)), results.dir)
+
   files_seg <- file.path(
     file.path(reviewed.dir, "SEG_MAF"),
     grep("segtab.txt", dir(file.path(reviewed.dir, "SEG_MAF")), value = TRUE)
   )
+  cat("--> Copying ", paste(files_seg, collapse = ", "), "to", seg.dir, "...\n")
   t <- file.copy(from = files_seg, to = seg.dir)
+
   files_maf <- file.path(
     file.path(reviewed.dir, "SEG_MAF"),
     grep("ABS_MAF.txt", dir(file.path(reviewed.dir, "SEG_MAF")), value = TRUE)
   )
+  cat("--> Copying ", paste(files_maf, collapse = ", "), "to", maf.dir, "...\n")
   t <- file.copy(from = files_maf, to = maf.dir)
 
   if (keepAllResult) {
