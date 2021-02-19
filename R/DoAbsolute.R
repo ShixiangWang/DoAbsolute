@@ -387,6 +387,8 @@ DoAbsolute <- function(Seg, Maf = NULL,
   ## This will make problem when iteration computation with same temp dir
   # absolute_files = file.path(cache.dir, grep("RData", dir(cache.dir), value = TRUE))
   absolute_files <- file.path(cache.dir, paste0(SAMPLES, ".ABSOLUTE.RData"))
+  cat("--> Files in cache directory:\n")
+  print(dir(cache.dir))
   if (verbose) cat("-> Checking result files...\n")
   for (f in absolute_files) {
     if (!file.exists(f)) {
@@ -445,7 +447,7 @@ DoAbsolute <- function(Seg, Maf = NULL,
   maf.dir <- file.path(results.dir, "maf")
   dir.create(seg.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(maf.dir, showWarnings = FALSE, recursive = TRUE)
-  cat("--> Copying DoAbsolute files in review dir to result directory...")
+  cat("--> Copying DoAbsolute files in review dir to result directory...\n")
   t <- file.copy(file.path(reviewed.dir, grep("DoAbsolute", dir(reviewed.dir), value = TRUE)), results.dir)
 
   files_seg <- file.path(
