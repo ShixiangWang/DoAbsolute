@@ -53,9 +53,18 @@ DoAbsolute <- function(Seg, Maf = NULL,
                        max.non.clonal = 0.05, max.neg.genome = 0.005, copy.num.type = c("total", "allelic"),
                        min.mut.af = 0.1, min.no.mut = 5, verbose = FALSE, nThread = 1L, keepAllResult = TRUE,
                        recover = FALSE) {
-  if (!dir.exists(results.dir)) {
-    dir.create(results.dir, recursive = TRUE, showWarnings = TRUE)
+  dir.create2 <- function(x) {
+    if (!dir.exists(x)) {
+      message("Directory ", x, " does not exists.")
+      if (!dir.create(x, recursive = TRUE)) {
+        if (dir.create(x)) {
+          stop("Failed creating directory!")
+        }
+      }
+    }
   }
+
+  dir.create2(results.dir)
   cat("-> Setting results directory as", results.dir, "\n")
 
   if (file.exists(file.path(results.dir, "error.log"))) {
@@ -172,9 +181,7 @@ DoAbsolute <- function(Seg, Maf = NULL,
   maf_filepath <- vector(mode = "character", length = length(samples))
 
   if (verbose) cat("-> Creating temp directory ...\n")
-  if (!dir.exists(temp.dir)) {
-    dir.create(temp.dir, recursive = TRUE, showWarnings = FALSE)
-  }
+  dir.create2(temp.dir)
   cat("-> Setting temp directory as", temp.dir, "\n")
 
   if (verbose) cat("-> Spliting seg data of samples to different files...\n")
@@ -214,9 +221,7 @@ DoAbsolute <- function(Seg, Maf = NULL,
   copy_num_type <- match.arg(copy.num.type)
 
   cache.dir <- file.path(temp.dir, "cache")
-  if (!dir.exists(cache.dir)) {
-    dir.create(cache.dir, recursive = TRUE, showWarnings = FALSE)
-  }
+  dir.create2(cache.dir)
 
   if (recover) {
     cat("-> recover mode is TRUE, checking samples have been called...\n")
@@ -445,8 +450,9 @@ DoAbsolute <- function(Seg, Maf = NULL,
 
   seg.dir <- file.path(results.dir, "seg")
   maf.dir <- file.path(results.dir, "maf")
-  dir.create(seg.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(maf.dir, showWarnings = FALSE, recursive = TRUE)
+  dir.create2(seg.dir)
+  dir.create2(maf.dir)
+
   cat("--> Copying DoAbsolute files in review dir to result directory...\n")
   t <- file.copy(file.path(reviewed.dir, grep("DoAbsolute", dir(reviewed.dir), value = TRUE)), results.dir)
 
@@ -468,9 +474,9 @@ DoAbsolute <- function(Seg, Maf = NULL,
     call.dir <- file.path(results.dir, "summary")
     samples_before_call.dir <- file.path(results.dir, "sample_before_summary")
     samples_called.dir <- file.path(results.dir, "sample_final_called")
-    dir.create(call.dir, showWarnings = FALSE, recursive = TRUE)
-    dir.create(samples_before_call.dir, showWarnings = FALSE, recursive = TRUE)
-    dir.create(samples_called.dir, showWarnings = FALSE, recursive = TRUE)
+    dir.create2(call.dir)
+    dir.create2(samples_before_call.dir)
+    dir.create2(samples_called.dir)
 
     files_call <- file.path(review.dir, grep("DoAbsolute", dir(review.dir), value = TRUE))
     t <- file.copy(from = files_call, to = call.dir)
