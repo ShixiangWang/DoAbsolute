@@ -6,7 +6,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![GitHub
 tag](https://img.shields.io/github/tag/ShixiangWang/DoAbsolute.svg?label=Github)](https://github.com/ShixiangWang/DoAbsolute)
-[![HitCount](http://hits.dwyl.io/ShixiangWang/DoAbsolute.svg)](http://hits.dwyl.io/ShixiangWang/DoAbsolute)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FShixiangWang%2FDoAbsolute&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 The goal of **DoAbsolute** is to automate ABSOLUTE calling for multiple
 samples in parallel way.
@@ -28,7 +28,7 @@ link](http://software.broadinstitute.org/cancer/software/genepattern/analyzing-a
 You can install the released version of DoAbsolute with:
 
 ``` r
-devtools::install_github("ShixiangWang/DoAbsolute")
+remotes::install_github("ShixiangWang/DoAbsolute")
 ```
 
 Install ABSOLUTE, the version provided by DoAbsolute is 1.0.6. You can
