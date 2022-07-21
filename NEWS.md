@@ -1,3 +1,8 @@
+# DoAbsolute 2.2.0
+
+* Update ABSOLUTE source code to make it works with R>=4.2. (https://github.com/ShixiangWang/DoAbsolute/issues/21)
+* Render more message about error.
+
 # DoAbsolute 2.1.0
 
 * Fixed error raised by "no mutation left" (#9).

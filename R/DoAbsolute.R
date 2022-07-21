@@ -299,6 +299,8 @@ DoAbsolute <- function(Seg, Maf = NULL,
             sink(file.path(results.dir, "error.log"), append = TRUE)
             cat("Detected error in sample", samples[i], "\n")
             cat("Error message:", e$message, "\n")
+            cat("Where:\n")
+            cat(as.character(e$call), "\n")
             if (grepl("mutations left", e$message)) {
               cat("Try fixing by removing Maf file.\n")
               tryCatch(
