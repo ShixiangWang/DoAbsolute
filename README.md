@@ -6,7 +6,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![GitHub
 tag](https://img.shields.io/github/tag/ShixiangWang/DoAbsolute.svg?label=Github)](https://github.com/ShixiangWang/DoAbsolute)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FShixiangWang%2FDoAbsolute&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![HitCount](http://hits.dwyl.io/ShixiangWang/DoAbsolute.svg)](http://hits.dwyl.io/ShixiangWang/DoAbsolute)
 
 The goal of **DoAbsolute** is to automate ABSOLUTE calling for multiple
 samples in parallel way.
@@ -28,13 +28,13 @@ link](http://software.broadinstitute.org/cancer/software/genepattern/analyzing-a
 You can install the released version of DoAbsolute with:
 
 ``` r
-remotes::install_github("ShixiangWang/DoAbsolute")
+devtools::install_github("ShixiangWang/DoAbsolute")
 ```
 
 Install ABSOLUTE, the version provided by DoAbsolute is 1.0.6. You can
 find available versions at
 <https://software.broadinstitute.org/cancer/cga/absolute_download>.
-Users of DoAbsolute all should accept LICENCE from Firehose.
+Users of DoAbsolute all should accept LICENCE from Firehorse.
 
 ``` r
 install.packages("numDeriv")
@@ -42,14 +42,20 @@ path_to_file = system.file("extdata", "ABSOLUTE_1.0.6.tar.gz", package = "DoAbso
 install.packages(path_to_file, repos = NULL, type="source")
 ```
 
+> NOTE: the builtin ABSOLUTE package is modified for fitting current R
+> version and reducing some errors (this may be described in NEWS.md).
+> If you want to use the raw package without modification, you can find
+> it
+> [here](https://github.com/ShixiangWang/DoAbsolute/wiki/ABSOLUTE-raw-package).
+> Remember the raw package (v1.0.6) is only working under R4.2.
+
 ## Example
 
 This is a basic example which shows you how to run DoAbsolute using
 example data from [ABSOLUTE
 documentation](http://software.broadinstitute.org/cancer/software/genepattern/modules/docs/ABSOLUTE).
 
-Load
-package.
+Load package.
 
 ``` r
 library(DoAbsolute)
@@ -97,5 +103,5 @@ DoAbsolute(Seg = Seg, Maf = Maf, platform = "SNP_6.0", copy.num.type = "total",
 
 Reference:
 
-  - Carter, Scott L., et al. “Absolute quantification of somatic DNA
+-   Carter, Scott L., et al. “Absolute quantification of somatic DNA
     alterations in human cancer.” Nature biotechnology 30.5 (2012): 413.

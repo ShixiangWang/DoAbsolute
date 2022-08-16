@@ -44,13 +44,19 @@ devtools::install_github("ShixiangWang/DoAbsolute")
 
 Install ABSOLUTE, the version provided by DoAbsolute is 1.0.6. You can
 find available versions at <https://software.broadinstitute.org/cancer/cga/absolute_download>.
-Users of DoAbsolute all should accept LICENCE from Firehose.
+Users of DoAbsolute all should accept LICENCE from Firehorse.
 
 ```r
 install.packages("numDeriv")
 path_to_file = system.file("extdata", "ABSOLUTE_1.0.6.tar.gz", package = "DoAbsolute", mustWork = T)
 install.packages(path_to_file, repos = NULL, type="source")
 ```
+
+> NOTE: the builtin ABSOLUTE package is modified for fitting current R version
+> and reducing some errors (this may be described in NEWS.md).
+> If you want to use the raw package without modification, you can find it
+> [here](https://github.com/ShixiangWang/DoAbsolute/wiki/ABSOLUTE-raw-package).
+> Remember the raw package (v1.0.6) is only working under R4.2.
 
 ## Example
 
