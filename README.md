@@ -28,7 +28,17 @@ link](http://software.broadinstitute.org/cancer/software/genepattern/analyzing-a
 You can install the released version of DoAbsolute with:
 
 ``` r
+# Option 1: GitHub
 devtools::install_github("ShixiangWang/DoAbsolute")
+
+
+# Option 2: r-universe
+#
+# Enable repository from shixiangwang
+options(repos = c(
+  shixiangwang = 'https://shixiangwang.r-universe.dev',
+  CRAN = 'https://cloud.r-project.org'))
+install.packages('DoAbsolute')
 ```
 
 Install ABSOLUTE, the version provided by DoAbsolute is 1.0.6. You can
@@ -103,5 +113,5 @@ DoAbsolute(Seg = Seg, Maf = Maf, platform = "SNP_6.0", copy.num.type = "total",
 
 Reference:
 
--   Carter, Scott L., et al. “Absolute quantification of somatic DNA
-    alterations in human cancer.” Nature biotechnology 30.5 (2012): 413.
+- Carter, Scott L., et al. “Absolute quantification of somatic DNA
+  alterations in human cancer.” Nature biotechnology 30.5 (2012): 413.
