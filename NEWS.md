@@ -1,5 +1,6 @@
 # DoAbsolute 2.2.0
 
+* Add NOTE for inconsistent observations between ABSOLUTE and DoAbsolute.
 * Update ABSOLUTE source code to make it works with R>=4.2. (https://github.com/ShixiangWang/DoAbsolute/issues/21)
 * Render more message about error.
 

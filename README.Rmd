@@ -115,6 +115,12 @@ DoAbsolute(Seg = Seg, Maf = Maf, platform = "SNP_6.0", copy.num.type = "total",
            results.dir = "test", nThread = 2, keepAllResult = TRUE, verbose = TRUE)
 ```
 
+## NOTE!!!
+
+Strangely, someone have found inconsistent results between DoAbsolute and ABSOLUTE (See discussion in <https://github.com/ShixiangWang/DoAbsolute/issues/23> and <https://github.com/ShixiangWang/DoAbsolute/issues/26>), I have no idea why it happens. If you just want to find some code to batch run the ABSOLUTE, code provided in [here](https://github.com/ShixiangWang/DoAbsolute/issues/26#issuecomment-1445245345) could be a good reference (Thanks to [@xiasijian](https://github.com/xiasijian)).
+
+
+
 ## Citation
 
 ```
