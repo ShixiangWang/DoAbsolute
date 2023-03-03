@@ -107,15 +107,11 @@ DoAbsolute(Seg = Seg, Maf = Maf, platform = "SNP_6.0", copy.num.type = "total",
 
 ## NOTE!!!
 
-Strangely, someone have found inconsistent results between DoAbsolute
-and ABSOLUTE (See discussion in
-<https://github.com/ShixiangWang/DoAbsolute/issues/23> and
-<https://github.com/ShixiangWang/DoAbsolute/issues/26>), I have no idea
-why it happens. If you just want to find some code to batch run the
-ABSOLUTE, code provided in
-[here](https://github.com/ShixiangWang/DoAbsolute/issues/26#issuecomment-1445245345)
-could be a good reference (Thanks to
-[@xiasijian](https://github.com/xiasijian)).
+Some inconsistent results have been reported in some issues (See
+discussion in <https://github.com/ShixiangWang/DoAbsolute/issues/23> and
+<https://github.com/ShixiangWang/DoAbsolute/issues/26>), and it possibly
+relates to the parallel computation backend. **So, at default, run this
+tool with only 1 thread is highly recommended**!
 
 ## Citation
 
