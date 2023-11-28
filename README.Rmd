@@ -21,7 +21,9 @@ tag](https://img.shields.io/github/tag/ShixiangWang/DoAbsolute.svg?label=Github)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FShixiangWang%2FDoAbsolute&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 The goal of **DoAbsolute** is to automate ABSOLUTE calling for multiple
-samples in parallel way.
+samples in batch-processing.
+
+>  **Running this tool with 1 thread (default setting) is highly recommended**, see [note!!!](#note)!
 
 [ABSOLUTE](https://www.nature.com/articles/nbt.2203) is a famous
 software developed by Broad Institute, however, the `RunAbsolute`
@@ -112,7 +114,7 @@ Maf$Tumor_Sample_Barcode = substr(Maf$Tumor_Sample_Barcode, 1, 15)
 
 # test function
 DoAbsolute(Seg = Seg, Maf = Maf, platform = "SNP_6.0", copy.num.type = "total",
-           results.dir = "test", nThread = 2, keepAllResult = TRUE, verbose = TRUE)
+           results.dir = "test", keepAllResult = TRUE, verbose = TRUE)
 ```
 
 ## NOTE!!!
